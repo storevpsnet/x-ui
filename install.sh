@@ -83,7 +83,7 @@ install_base() {
 
 #This function will be called when user installed x-ui out of sercurity
 config_after_install() {
-    echo -e "${yellow} Install/update finished! For security it's recommended to modify panel settings ${plain}"
+    echo -e "${yellow}Install/update finished! For security it's recommended to modify panel settings ${plain}"
     read -p "Do you want to continue with the modification [y/n]? ": config_confirm
     if [[ x"${config_confirm}" == x"y" || x"${config_confirm}" == x"Y" ]]; then
         read -p "Please set up your username:" config_account
@@ -121,10 +121,10 @@ install_x-ui() {
     else
         last_version=$1
         url="https://github.com/diditra/x-ui/releases/download/${last_version}/x-ui-linux-${arch}.tar.gz"
-        echo -e "Begining to install x-ui v$1"
+        echo -e "Begining to install x-ui $1"
         wget -N --no-check-certificate -O /usr/local/x-ui-linux-${arch}.tar.gz ${url}
         if [[ $? -ne 0 ]]; then
-            echo -e "${red}Download x-ui v$1 failed,please check the version exists${plain}"
+            echo -e "${red}Download x-ui $1 failed,please check the version exists${plain}"
             exit 1
         fi
     fi
@@ -151,7 +151,7 @@ install_x-ui() {
     systemctl daemon-reload
     systemctl enable x-ui
     systemctl start x-ui
-    echo -e "${green}x-ui v${last_version}${plain} installation finished, it is running now..."
+    echo -e "${green}x-ui ${last_version}${plain} installation finished, it is running now..."
     echo -e ""
     echo -e "x-ui control menu usages: "
     echo -e "----------------------------------------------"
