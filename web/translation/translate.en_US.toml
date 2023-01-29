@@ -17,7 +17,7 @@
 "hour" = "hour"
 "day" = "day"
 "check" = "check"
-"indefinitely" = "indefinitely"
+"indefinite" = "indefinite"
 "unlimited" = "unlimited"
 "none" = "none"
 "qrCode" = "QR Code"
@@ -41,6 +41,7 @@
 "success" = " success"
 "getVersion" = "get version"
 "install" = "install"
+"used" = "used"
 
 [menu]
 "dashboard" = "System Status"
@@ -123,6 +124,7 @@
 "keyPath" = "key file path"
 "keyContent" = "key content"
 "client" = "Client"
+"uid" = "UID"
 
 [pages.inbounds.toasts]
 "obtain" = "Obtain"
