@@ -54,6 +54,7 @@
                                  style="margin-top: 20px"
                                  @change="() => getDBInbounds()">
                             <template slot="action" slot-scope="text, dbInbound">
+                                <a-icon type="edit" @click="openEditInbound(dbInbound)"></a-icon>
                                 <a-dropdown :trigger="['click']">
                                     <a @click="e => e.preventDefault()">{{ i18n "pages.inbounds.operate" }}</a>
                                     <a-menu slot="overlay" @click="a => clickAction(a, dbInbound)">
@@ -112,6 +113,17 @@
                                 </template>
                                 <a-tag v-else color="green">{{ i18n "indefinitely" }}</a-tag>
                             </template>
+                            <template slot="expandedRowRender" slot-scope="record">
+                                <a-table
+                                v-if="(record.protocol === Protocols.VLESS) || (record.protocol === Protocols.VMESS)"
+                                :row-key="client => client.id"
+                                :columns="innerColumns"
+                                :data-source="getInboundClients(record)"
+                                :pagination="false"
+                                >
+                                    {{template "form/client_row"}}
+                                </a-table>
+                            </template>
                         </a-table>
                     </a-card>
                 </transition>
@@ -125,7 +137,7 @@
     const columns = [{
         title: '{{ i18n "pages.inbounds.operate" }}',
         align: 'center',
-        width: 30,
+        width: 40,
         scopedSlots: { customRender: 'action' },
     }, {
         title: '{{ i18n "pages.inbounds.enable" }}',
@@ -173,6 +185,13 @@
         width: 80,
         scopedSlots: { customRender: 'expiryTime' },
     }];
+
+    const innerColumns = [
+    { title: '{{ i18n "pages.inbounds.client" }}', width: 80, scopedSlots: { customRender: 'client' } },
+    { title: '{{ i18n "pages.inbounds.traffic" }}', width: 100, scopedSlots: { customRender: 'traffic' } },
+    { title: '{{ i18n "pages.inbounds.expireDate" }}', width: 80, scopedSlots: { customRender: 'expiryTime' } },
+    { title: '{{ i18n "pages.inbounds.uid" }}', width: 150, dataIndex: "id" },
+    ];
 
     const app = new Vue({
         delimiters: ['[[', ']]'],
@@ -338,6 +357,69 @@
                     await this.getDBInbounds();
                 }
             },
+            getInboundClients(dbInbound) {
+                if(dbInbound.protocol == Protocols.VLESS) {
+                    return dbInbound.toInbound().settings.vlesses
+                } else if(dbInbound.protocol == Protocols.VMESS) {
+                    return dbInbound.toInbound().settings.vmesses
+                }
+            },
+            isExpiry(dbInbound, index) {
+                return dbInbound.toInbound().isExpiry(index)
+            },
+            getUpStats(dbInbound, email) {
+                clientStats = dbInbound.clientStats
+                if(clientStats.length > 0)
+                {
+                    for (const key in clientStats) {
+                        if (Object.hasOwnProperty.call(clientStats, key)) {
+                            if(clientStats[key]['email'] == email)
+                                return clientStats[key]['up']
+
+                        }
+                    }
+                }
+
+            },
+            getDownStats(dbInbound, email) {
+                clientStats = dbInbound.clientStats
+                if(clientStats.length > 0)
+                {
+                    for (const key in clientStats) {
+                        if (Object.hasOwnProperty.call(clientStats, key)) {
+                            if(clientStats[key]['email'] == email)
+                                return clientStats[key]['down']
+
+                        }
+                    }
+                }
+            },
+            isTrafficExhausted(dbInbound, email) {
+                clientStats = dbInbound.clientStats
+                if(clientStats.length > 0)
+                {
+                    for (const key in clientStats) {
+                        if (Object.hasOwnProperty.call(clientStats, key)) {
+                            if(clientStats[key]['email'] == email)
+                                return clientStats[key]['down']+clientStats[key]['up'] > clientStats[key]['total']
+
+                        }
+                    }
+                }
+            },
+            isClientEnabled(dbInbound, email) {
+                clientStats = dbInbound.clientStats
+                if(clientStats.length > 0)
+                {
+                    for (const key in clientStats) {
+                        if (Object.hasOwnProperty.call(clientStats, key)) {
+                            if(clientStats[key]['email'] == email)
+                                return clientStats[key]['enable']
+
+                        }
+                    }
+                }
+            },
         },
         watch: {
             searchKey(value) {
@@ -363,6 +445,7 @@
     });
 
 </script>
+
 {{template "inboundModal"}}
 {{template "promptModal"}}
 {{template "qrcodeModal"}}

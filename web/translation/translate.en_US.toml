@@ -88,7 +88,7 @@
 "totalDownUp" = "Total uploads/downloads"
 "totalUsage" = "Total usage"
 "inboundCount" = "Number of inbound"
-"operate" = "operate"
+"operate" = "Actions"
 "enable" = "enable"
 "remark" = "remark"
 "protocol" = "protocol"
@@ -122,6 +122,7 @@
 "publicKeyContent" = "public key content"
 "keyPath" = "key file path"
 "keyContent" = "key content"
+"client" = "Client"
 
 [pages.inbounds.toasts]
 "obtain" = "Obtain"
