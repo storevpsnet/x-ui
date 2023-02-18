@@ -85,12 +85,12 @@ find this in config :
 # Install & Upgrade
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/diditra/x-ui/master/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/storevpsnet/x-ui/master/install.sh)
 ```
 
 ## Manual install & upgrade
 
-1. First download the latest compressed package from https://github.com/diditra/x-ui/releases , generally choose Architecture `amd64`
+1. First download the latest compressed package from https://github.com/storevpsnet/x-ui/releases , generally choose Architecture `amd64`
 2. Then upload the compressed package to the server's `/root/` directory and `root` rootlog in to the server with user
 
 > If your server cpu architecture is not `amd64` replace another architecture
@@ -110,7 +110,7 @@ systemctl restart x-ui
 
 ## Install using docker
 
-> This docker tutorial and docker image are provided by [Diditra](https://github.com/diditra)
+> This docker tutorial and docker image are provided by [storevpsnet](https://github.com/storevpsnet)
 
 1. install docker
 
@@ -207,4 +207,4 @@ x-ui v2-ui
 
 ## Stargazers over time
 
-[![Stargazers over time](https://starchart.cc/diditra/x-ui.svg)](https://starchart.cc/diditra/x-ui)
+[![Stargazers over time](https://starchart.cc/storevpsnet/x-ui.svg)](https://starchart.cc/storevpsnet/x-ui)
