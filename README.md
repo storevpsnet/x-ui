@@ -205,6 +205,9 @@ First install the latest version of x-ui on the server where v2-ui is installed,
 x-ui v2-ui
 ```
 
+
 ## Stargazers over time
 
-[![Stargazers over time](https://starchart.cc/storevpsnet/x-ui.svg)](https://starchart.cc/storevpsnet/x-ui)
+[![Stargazers over time](https://starchart.cc/caarlos0/starcharts.svg)](https://starchart.cc/caarlos0/starcharts)
+
+
